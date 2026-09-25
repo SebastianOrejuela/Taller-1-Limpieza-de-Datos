@@ -32,7 +32,8 @@ graficar("Fig1_tipo_cultivo.png", function() {
                xlim = c(0, max(p) * 1.15), cex.names = 0.85,
                xlab = "Porcentaje de registros (%)",
                main = "Figura 1. Registros por tipo de cultivo")
-  text(p, b, sprintf("%.1f%%", p), pos = 4, cex = 0.8)
+  text(p, b, paste0(formatC(p, format = "f", digits = 1, decimal.mark = ","), " %"),
+       pos = 4, cex = 0.8)
 })
 
 # ---- Figura 2: Los 10 cultivos más frecuentes ---------------------------------
@@ -55,7 +56,8 @@ graficar("Fig3_hist_rendimiento.png", function() {
   abline(v = mean(x),   col = col2,    lwd = 2, lty = 2)
   abline(v = median(x), col = "black", lwd = 2)
   legend("topright", bty = "n",
-         legend = c(sprintf("Media = %.2f", mean(x)), sprintf("Mediana = %.2f", median(x))),
+         legend = paste(c("Media =", "Mediana ="),
+                        formatC(c(mean(x), median(x)), format = "f", digits = 2, decimal.mark = ",")),
          col = c(col2, "black"), lty = c(2, 1), lwd = 2)
 })
 
@@ -66,7 +68,9 @@ graficar("Fig4_hist_produccion_log.png", function() {
   hist(log10(x), breaks = 40, col = col1, border = "white", xaxt = "n",
        xlab = "Producción (t, escala logarítmica)", ylab = "Frecuencia",
        main = "Figura 4. Distribución de la producción")
-  axis(1, at = -2:7, labels = format(10^(-2:7), big.mark = ",", scientific = FALSE))
+  # Etiquetas en potencias de 10 con punto de miles: 1, 10, 100, 1.000, ...
+  axis(1, at = 0:6, cex.axis = 0.85,
+       labels = format(10^(0:6), big.mark = ".", scientific = FALSE, trim = TRUE))
 })
 
 # ---- Figura 5: Boxplot del rendimiento por tipo de cultivo -------------------
