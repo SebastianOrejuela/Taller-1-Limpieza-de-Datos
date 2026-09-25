@@ -50,7 +50,7 @@ graficar("Fig2_top10_cultivos.png", function() {
 # ---- Figura 3: Histograma del rendimiento ------------------------------------
 graficar("Fig3_hist_rendimiento.png", function() {
   x <- datos$Rendimiento_t_ha
-  hist(x, breaks = 40, col = col1, border = "white",
+  hist(x, breaks = 40, col = col1, border = "white", xlim = c(0, 200),
        xlab = "Rendimiento (t/ha)", ylab = "Frecuencia",
        main = "Figura 3. Distribución del rendimiento")
   abline(v = mean(x),   col = col2,    lwd = 2, lty = 2)
@@ -70,7 +70,8 @@ graficar("Fig4_hist_produccion_log.png", function() {
        main = "Figura 4. Distribución de la producción")
   # Etiquetas en potencias de 10 con punto de miles: 1, 10, 100, 1.000, ...
   axis(1, at = 0:6, cex.axis = 0.85,
-       labels = format(10^(0:6), big.mark = ".", scientific = FALSE, trim = TRUE))
+       labels = format(10^(0:6), big.mark = ".", decimal.mark = ",",
+                        scientific = FALSE, trim = TRUE))
 })
 
 # ---- Figura 5: Boxplot del rendimiento por tipo de cultivo -------------------
