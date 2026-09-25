@@ -6,8 +6,11 @@
 # ==============================================================================
 
 # ---- 0. Cargar los datos ------------------------------------------------------
-# Si la ruta falla, cambie la línea por:  ruta <- file.choose()
-ruta <- "C:/Users/sebas/Downloads/(Datos antes de la limpieza) Consolidado_agrícola_por_municipios_de_los_cultivos_permanentes_del_Valle_del_Cauca_20260922 copy.csv"
+# Busca el CSV original en la carpeta de trabajo (ignora el archivo limpio si ya existe)
+archivos <- list.files(pattern = "\\.csv$", ignore.case = TRUE)
+archivos <- archivos[grepl("antes de la limpieza", archivos)]
+print(archivos)          # debe aparecer el archivo original
+ruta <- archivos[1]
 
 # Se lee todo como texto (character) para revisar los formatos antes de convertir
 datos_crudos <- read.csv(ruta, encoding = "UTF-8", fileEncoding = "UTF-8",
@@ -183,4 +186,5 @@ cat("Filas eliminadas en total:", nrow(datos_crudos) - nrow(datos),
 
 write.csv(datos, "Datos_limpios_cultivos_Valle.csv",
           row.names = FALSE, fileEncoding = "UTF-8")
-getwd()   # aquí queda guardado el archivo limpio
+write.csv(bitacora, "Bitacora_limpieza.csv",
+          row.names = FALSE, fileEncoding = "UTF-8")
