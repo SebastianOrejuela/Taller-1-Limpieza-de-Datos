@@ -1,15 +1,9 @@
 # ==============================================================================
-#  TALLER 1 - PUNTO 4: Estadística descriptiva univariada
-#  Requiere haber corrido antes Taller1_Punto3_Limpieza.R
-#  (o tener el archivo Datos_limpios_cultivos_Valle.csv en la carpeta)
+#  TALLER 1 - PUNTO 4: Estadísticas descriptivas univariadas
 # ==============================================================================
-options(scipen = 999)   # evita la notación científica (1e+05)
 
-# Si cerraste R, se cargan de nuevo los datos limpios
-if (!exists("datos")) {
-  datos <- read.csv("Datos_limpios_cultivos_Valle.csv",
-                    encoding = "UTF-8", fileEncoding = "UTF-8")
-}
+options(scipen = 999)   # para evitar la notación científica
+
 
 # ---- 4.1 VARIABLES CUANTITATIVAS ---------------------------------------------
 vars_cuanti <- c("Ha_sembradas", "Ha_cosechadas", "Produccion_t", "Rendimiento_t_ha")
@@ -68,7 +62,7 @@ frec_cultivo
 frec_municipio
 frec_anio
 
-# ---- 4.3 TABLA RESUMEN (formato tipo "Tabla 1" del artículo) -----------------
+# ---- TABLA RESUMEN ----------------------------------------------------------
 f <- function(v) formatC(v, format = "f", digits = 2, big.mark = ",")
 tabla1_cuanti <- data.frame(
   Variable            = c("Hectáreas sembradas (ha)", "Hectáreas cosechadas (ha)",
@@ -81,7 +75,7 @@ tabla1_cuanti <- data.frame(
 )
 tabla1_cuanti
 
-# ---- 4.4 EXPORTAR LAS TABLAS --------------------------------------------------
+# ---- EXPORTAR LAS TABLAS --------------------------------------------------
 write.csv(data.frame(Variable = rownames(tabla_cuanti), tabla_cuanti),
           "Tabla_cuantitativas.csv", row.names = FALSE, fileEncoding = "UTF-8")
 write.csv(tabla1_cuanti,  "Tabla1_resumen.csv",        row.names = FALSE, fileEncoding = "UTF-8")
