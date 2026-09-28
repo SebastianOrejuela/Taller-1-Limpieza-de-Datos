@@ -1,8 +1,7 @@
 # ==============================================================================
 #  TALLER 1 - PUNTO 5: Gráficos
-#  Requiere haber corrido antes Taller1_Punto3_Limpieza.R
-#  (o tener el archivo Datos_limpios_cultivos_Valle.csv en la carpeta)
 # ==============================================================================
+
 if (!exists("datos")) {
   datos <- read.csv("Datos_limpios_cultivos_Valle.csv",
                     encoding = "UTF-8", fileEncoding = "UTF-8")
@@ -11,12 +10,12 @@ if (!exists("datos")) {
 col1 <- "#2E7D6B"   # verde
 col2 <- "#E07B39"   # naranja
 
-# Nombres cortos para que los tipos de cultivo quepan en los gráficos
+# Cambiamos los nombres para que sean más cortos, para que los tipos de cultivo quepan en los gráficos
 tipo_corto <- as.character(datos$Tipo_cultivo)
 tipo_corto[tipo_corto == "Cultivos para Condimentos y Bebidas Medicinales y Aromáticas"] <- "Condimentos y aromáticas"
 tipo_corto[tipo_corto == "Cultivos Tropicales Tradicionales"] <- "Tropicales tradicionales"
 
-# Dibuja el gráfico en pantalla y además lo guarda como PNG
+# Dibuja el gráfico en pantalla lo guarda como PNG
 graficar <- function(archivo, dibujar) {
   dibujar()
   png(archivo, width = 1000, height = 650, res = 120)
@@ -61,18 +60,6 @@ graficar("Fig3_hist_rendimiento.png", function() {
          col = c(col2, "black"), lty = c(2, 1), lwd = 2)
 })
 
-# ---- Figura 4: Histograma de la producción (escala logarítmica) --------------
-# La producción es tan asimétrica que en escala normal casi todo queda en una barra
-graficar("Fig4_hist_produccion_log.png", function() {
-  x <- datos$Produccion_t[datos$Produccion_t > 0]
-  hist(log10(x), breaks = 40, col = col1, border = "white", xaxt = "n",
-       xlab = "Producción (t, escala logarítmica)", ylab = "Frecuencia",
-       main = "Figura 4. Distribución de la producción")
-  # Etiquetas en potencias de 10 con punto de miles: 1, 10, 100, 1.000, ...
-  axis(1, at = 0:6, cex.axis = 0.85,
-       labels = format(10^(0:6), big.mark = ".", decimal.mark = ",",
-                        scientific = FALSE, trim = TRUE))
-})
 
 # ---- Figura 5: Boxplot del rendimiento por tipo de cultivo -------------------
 graficar("Fig5_boxplot_rendimiento_tipo.png", function() {
